@@ -6,8 +6,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+
+import calculadoraIMC.Exception.AlturaErradaException;
+import calculadoraIMC.Exception.PesoErradoException;
+import calculadoraIMC.Model.TiposIMC;
 
 public class CalculadoraIMC extends JanelaPadrao{
 	
@@ -36,10 +41,45 @@ public class CalculadoraIMC extends JanelaPadrao{
 	public ActionListener ouvinteBotaoCalcular() {
 		return new ActionListener() {
 			
-			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new ResultadoIMC();
+				calculadoraIMC.Model.CalculadoraIMC calculadora = new calculadoraIMC.Model.CalculadoraIMC();
+				try {
+					double imc = calculadora.calcularIMC(Double.parseDouble(campoPeso.getText()), Double.parseDouble(campoAltura.getText()));
+					TiposIMC tipo = calculadora.AtribuirIMC(imc);
+					String categoria = "";	
+					
+					switch(tipo) {
+					
+					case BAIXOPESO:
+						categoria = "Abaixo do Peso";
+						break;
+					case NORMAL:
+						categoria = "Peso Normal";
+						break;
+					case ACIMADOPESO:
+						categoria = "Acima do peso";
+						break;
+					case OBESIDADEGRAU1:
+						categoria = "Obesidade Grau 1";
+						break;
+					case OBESIDADEGRAU2:
+						categoria = "obesidade grau 2";
+						break;
+					default:
+						categoria = "Não definido";
+						break;						
+					}
+					
+					double sugerido = calculadora.calcularDiferenca(imc);
+					
+					dispose();
+					new ResultadoIMC(imc, categoria, sugerido);
+				
+				}catch(PesoErradoException erro) {
+					JOptionPane.showMessageDialog(null, "Peso inválido, tente novamente!");
+				}catch(AlturaErradaException erro) {
+					JOptionPane.showMessageDialog(null, "Altura inválida, tente novamente!");
+				}
 			}
 		};
 	}
