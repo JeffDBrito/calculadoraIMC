@@ -2,7 +2,9 @@ package calculadoraIMC.Model;
 
 import calculadoraIMC.Exception.AlturaErradaException;
 import calculadoraIMC.Exception.PesoErradoException;
-
+/***
+ * Classe responsavel por implementar a InterfaceCalculadoraIMC e seus metodos, assim atribuindo as determinadas regras de negocio para esses metodos.
+ */
 public class CalculadoraIMC implements InterfaceCalculadoraIMC{
 
 	@Override
@@ -19,6 +21,7 @@ public class CalculadoraIMC implements InterfaceCalculadoraIMC{
 		return peso/Math.pow(altura, 2);
 	}
 
+	
 	@Override
 	public TiposIMC AtribuirIMC(double imc) {
 		
