@@ -1,7 +1,9 @@
 package calculadoraIMC.Model;
 
 import java.text.ParseException;
-
+/***
+ * Classe responsavel por implementar a InterfaceConversor e seus metodos, assim atribuindo as determinadas regras de negocio para esses metodos.
+ */
 public class Conversor implements InterfaceConversor{
 
 	@Override
